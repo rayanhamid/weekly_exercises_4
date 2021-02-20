@@ -248,13 +248,37 @@ Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv
   9. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. This time, plot the points on top of a map. Use any of the mapping tools you'd like.
   
 ```{r}
+Trips_by_Station<- Trips %>% 
+  group_by(sstation) %>% 
+  count() %>% 
+  left_join(Stations, by = c("sstation" = "name"))
 
+Trips_by_Station
 ```
   
   10. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? Also plot this on top of a map. I think it will be more clear what the patterns are.
   
 ```{r}
 
+bike_map <- get_stamenmap(
+    bbox = c(left = -77.3026, bottom = 38.7211, right =-76.6590, top = 39.1652), 
+    maptype = "terrain",
+    zoom = 10)
+
+ggmap(bike_map) +
+  geom_point(data = Trips_by_Station, aes(x = long, y = lat, size = n))+
+  scale_color_viridis_c(option = "magma")
+```
+```{r}
+
+Trips_by_Client <-Trips %>% 
+  group_by(sstation) %>% 
+  summarise(cash_perc = sum(client == "Casual") / n()) %>% 
+  left_join(Stations, by = c("sstation" = "name")) 
+
+ggmap(bike_map) +
+  geom_point(data = Trips_by_Client, aes(x = long, y = lat, size = cash_perc))+
+  scale_color_viridis_c(option = "magma")
 ```
   
 ### COVID-19 data
