@@ -936,6 +936,8 @@ leaflet(data = mpls_all) %>%
 
   19. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 04_exercises.Rmd, provide a link to the 04_exercises.md file, which is the one that will be most readable on GitHub.
 
+https://github.com/rayanhamid/weekly_exercises_4/blob/main/04_exercises.md 
+
 
 ```r
 #Credit: I worked on this exercise with Mohamed Abdi
