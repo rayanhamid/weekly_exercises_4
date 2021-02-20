@@ -51,7 +51,7 @@ favorite_stp_by_lisa <- tibble(
   lat = c(44.950576, 44.9378965, 44.9237914,
           44.9654609, 44.9295072, 44.9436813, 
           44.9399922, 44.9468848, 44.9700727)
-  )
+)
 
 #COVID-19 data from the New York Times
 covid19 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
@@ -95,11 +95,14 @@ These exercises will reiterate what you learned in the "Mapping data with R" tut
 ### Starbucks locations (`ggmap`)
 
   1. Add the `Starbucks` locations to a world map. Add an aesthetic to the world map that sets the color of the points according to the ownership type. What, if anything, can you deduce from this visualization?  
+  
+  
 ```{r}
 worldmap <- get_stamenmap(
   bbox = c(left = -169, bottom = -61, right = 190, top = 81 ),
   maptype = "terrain",
-  zoom = 2)
+  zoom = 2
+  )
 
 ggmap(worldmap) + 
   geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
@@ -107,21 +110,18 @@ ggmap(worldmap) +
              size = .1)+
   theme_map() +
   theme(legend.background = element_blank())
-
-
 ```
 ```{r}
-#From this it can be observed that there is a very large concentration of licensed and company owned in North America, which is expected, and almost all joint venture are located in Asia, with a higher concentration in South East Asia, and to a smaller extent in Eurasia.
+#description: From this it can be observed that there is a very large concentration of licensed and company owned in North America, which is expected, and almost all joint venture are located in Asia, with a higher concentration in South East Asia, and to a smaller extent in Eurasia.
 ```
 
-  2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area).  
+  2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area). 
+  
 ```{r}
 twincities_map <- get_stamenmap(
   bbox = c(left = -93.5, bottom =44.78, right =-92.68, top = 45.11),
   maptype = "terrain",
-  zoom = 11
-)
-
+  zoom = 11)
 ggmap(twincities_map) + 
   geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
              alpha = 0.5,
@@ -131,17 +131,18 @@ ggmap(twincities_map) +
 ```
 
   3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map).  
+  
 ```{r}
 #The zoom number changes how clearly we see the small details on the map, for higher numbers there is more visble through detail but for lower numbers, less detail can be seen.
 ```
 
   4. Try a couple different map types (see `get_stamenmap()` in help and look at `maptype`). Include a map with one of the other map types.  
+  
 ```{r}
 twincities_map <- get_stamenmap(
   bbox = c(left = -93.4994, bottom =44.7872, right =-92.6851, top = 45.1113 ),
   maptype = "toner-hybrid",
-  zoom = 11
-)
+  zoom = 11)
 
 ggmap(twincities_map) + 
   geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
@@ -151,6 +152,22 @@ ggmap(twincities_map) +
 ```
 
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
+  
+  
+```{r}
+macalester <- ggmap(twincities_map) + 
+  geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
+             alpha = 0.3,
+             size =1 ) +
+  theme_map() +
+  theme(legend.background = element_blank())
+  
+macalester + annotate( "rect", xmin = -93.1702, xmax = -93.1671,ymin = 44.9412, ymax = 44.9343, label = "Macalester College") +
+  annotate( "text", x = -93.1702,y = 44.9512, label = "Macalester College")
+```
+
+
+
 
 ### Choropleth maps with Starbucks data (`geom_map()`)
 
@@ -181,6 +198,7 @@ starbucks_with_2018_pop_est <-
 ```
 
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+  
 ```{r}
 starbucks_with_2018_pop_est
 ```
@@ -248,6 +266,7 @@ Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv
   9. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. This time, plot the points on top of a map. Use any of the mapping tools you'd like.
   
 ```{r}
+
 Trips_by_Station<- Trips %>% 
   group_by(sstation) %>% 
   count() %>% 
@@ -255,11 +274,7 @@ Trips_by_Station<- Trips %>%
 
 Trips_by_Station
 ```
-  
-  10. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? Also plot this on top of a map. I think it will be more clear what the patterns are.
-  
 ```{r}
-
 bike_map <- get_stamenmap(
     bbox = c(left = -77.3026, bottom = 38.7211, right =-76.6590, top = 39.1652), 
     maptype = "terrain",
@@ -269,6 +284,10 @@ ggmap(bike_map) +
   geom_point(data = Trips_by_Station, aes(x = long, y = lat, size = n))+
   scale_color_viridis_c(option = "magma")
 ```
+  
+  10. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? Also plot this on top of a map. I think it will be more clear what the patterns are.
+  
+
 ```{r}
 
 Trips_by_Client <-Trips %>% 
@@ -464,8 +483,6 @@ https://github.com/rayanhamid/weekly_exercises_4/blob/main/04_exercises.md
 
 ```{r}
 #Credit: I worked on this exercise with Mohamed Abdi
-
-
 
 ```
 
