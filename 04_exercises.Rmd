@@ -133,7 +133,7 @@ ggmap(twincities_map) +
   3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map).  
   
 ```{r}
-#The zoom number changes how clearly we see the small details on the map, for higher numbers there is more visble through detail but for lower numbers, less detail can be seen.
+#The zoom number changes how clearly we see the small details on the map, for higher numbers there is more visible  detail but for lower numbers, less detail can be seen.
 ```
 
   4. Try a couple different map types (see `get_stamenmap()` in help and look at `maptype`). Include a map with one of the other map types.  
