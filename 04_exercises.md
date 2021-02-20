@@ -288,9 +288,218 @@ ggmap(worldmap) +
 
   2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area).  
 
+```r
+twincities_map <- get_stamenmap(
+  bbox = c(left = -93.5, bottom =44.78, right =-92.68, top = 45.11),
+  maptype = "terrain",
+  zoom = 11
+)
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/492/735.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/493/735.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/494/735.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/495/735.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/496/735.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/492/736.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/493/736.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/494/736.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/495/736.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/496/736.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/492/737.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/493/737.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/494/737.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/495/737.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/496/737.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/492/738.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/493/738.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/494/738.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/495/738.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/11/496/738.png
+```
+
+```r
+ggmap(twincities_map) + 
+  geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
+             alpha = 0.5,
+             size = 2)+
+  theme_map() +
+  theme(legend.background = element_blank())
+```
+
+```
+## Warning: Removed 25490 rows containing missing values (geom_point).
+```
+
+![](04_exercises_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
   3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map).  
 
+```r
+#The zoom number changes how clearly we see the small details on the map, for higher numbers there is more visble through detail but for lower numbers, less detail can be seen.
+```
+
   4. Try a couple different map types (see `get_stamenmap()` in help and look at `maptype`). Include a map with one of the other map types.  
+
+```r
+twincities_map <- get_stamenmap(
+  bbox = c(left = -93.4994, bottom =44.7872, right =-92.6851, top = 45.1113 ),
+  maptype = "toner-hybrid",
+  zoom = 11
+)
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/492/735.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/493/735.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/494/735.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/495/735.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/496/735.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/492/736.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/493/736.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/494/736.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/495/736.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/496/736.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/492/737.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/493/737.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/494/737.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/495/737.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/496/737.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/492/738.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/493/738.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/494/738.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/495/738.png
+```
+
+```
+## Source : http://tile.stamen.com/toner-hybrid/11/496/738.png
+```
+
+```r
+ggmap(twincities_map) + 
+  geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
+             alpha = 0.6,
+             size =1)+
+  theme_map() 
+```
+
+```
+## Warning: Removed 25492 rows containing missing values (geom_point).
+```
+
+![](04_exercises_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
 
@@ -325,7 +534,63 @@ starbucks_with_2018_pop_est <-
 
   6. **`dplyr` review**: Look through the code above and describe what each line of code does.
 
+```r
+# (chunk 1)Line 1 reads in the 2018 US census data. 
+#Line 2 takes out the dot in the names of the state and seperates them into 2 variables: state and dot
+#Line 3 deletes the new variable ‘dot’ 
+#Line 4 converts the state names to lowercase. 
+#(chunk2) Line 1 reads in the starbucks_us_by_state data 
+#Line 2 and 3 joins this dataset with the dataset created in the previous chunk by matching the state names in the 2 datasets 
+#Line 4 adds in a new variable which shows the density of starbucks in the given state (starbucks per 10000 people)
+```
+
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+
+```r
+starbucks_with_2018_pop_est
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["State/Province"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["state_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["est_pop_2018"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["starbucks_per_10000"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"AK","2":"49","3":"alaska","4":"737438","5":"0.6644626"},{"1":"AL","2":"85","3":"alabama","4":"4887871","5":"0.1738998"},{"1":"AR","2":"55","3":"arkansas","4":"3013825","5":"0.1824923"},{"1":"AZ","2":"488","3":"arizona","4":"7171646","5":"0.6804575"},{"1":"CA","2":"2821","3":"california","4":"39557045","5":"0.7131473"},{"1":"CO","2":"481","3":"colorado","4":"5695564","5":"0.8445169"},{"1":"CT","2":"123","3":"connecticut","4":"3572665","5":"0.3442808"},{"1":"DC","2":"91","3":"district of columbia","4":"702455","5":"1.2954566"},{"1":"DE","2":"25","3":"delaware","4":"967171","5":"0.2584858"},{"1":"FL","2":"694","3":"florida","4":"21299325","5":"0.3258319"},{"1":"GA","2":"326","3":"georgia","4":"10519475","5":"0.3099014"},{"1":"HI","2":"99","3":"hawaii","4":"1420491","5":"0.6969421"},{"1":"IA","2":"89","3":"iowa","4":"3156145","5":"0.2819896"},{"1":"ID","2":"67","3":"idaho","4":"1754208","5":"0.3819387"},{"1":"IL","2":"575","3":"illinois","4":"12741080","5":"0.4512961"},{"1":"IN","2":"221","3":"indiana","4":"6691878","5":"0.3302511"},{"1":"KS","2":"94","3":"kansas","4":"2911505","5":"0.3228571"},{"1":"KY","2":"116","3":"kentucky","4":"4468402","5":"0.2596006"},{"1":"LA","2":"84","3":"louisiana","4":"4659978","5":"0.1802584"},{"1":"MA","2":"273","3":"massachusetts","4":"6902149","5":"0.3955290"},{"1":"MD","2":"257","3":"maryland","4":"6042718","5":"0.4253053"},{"1":"ME","2":"30","3":"maine","4":"1338404","5":"0.2241476"},{"1":"MI","2":"283","3":"michigan","4":"9995915","5":"0.2831157"},{"1":"MN","2":"184","3":"minnesota","4":"5611179","5":"0.3279168"},{"1":"MO","2":"188","3":"missouri","4":"6126452","5":"0.3068660"},{"1":"MS","2":"32","3":"mississippi","4":"2986530","5":"0.1071478"},{"1":"MT","2":"36","3":"montana","4":"1062305","5":"0.3388857"},{"1":"NC","2":"338","3":"north carolina","4":"10383620","5":"0.3255127"},{"1":"ND","2":"13","3":"north dakota","4":"760077","5":"0.1710353"},{"1":"NE","2":"58","3":"nebraska","4":"1929268","5":"0.3006322"},{"1":"NH","2":"29","3":"new hampshire","4":"1356458","5":"0.2137921"},{"1":"NJ","2":"261","3":"new jersey","4":"8908520","5":"0.2929780"},{"1":"NM","2":"76","3":"new mexico","4":"2095428","5":"0.3626944"},{"1":"NV","2":"253","3":"nevada","4":"3034392","5":"0.8337749"},{"1":"NY","2":"645","3":"new york","4":"19542209","5":"0.3300548"},{"1":"OH","2":"378","3":"ohio","4":"11689442","5":"0.3233687"},{"1":"OK","2":"79","3":"oklahoma","4":"3943079","5":"0.2003510"},{"1":"OR","2":"359","3":"oregon","4":"4190713","5":"0.8566561"},{"1":"PA","2":"357","3":"pennsylvania","4":"12807060","5":"0.2787525"},{"1":"RI","2":"27","3":"rhode island","4":"1057315","5":"0.2553638"},{"1":"SC","2":"131","3":"south carolina","4":"5084127","5":"0.2576647"},{"1":"SD","2":"25","3":"south dakota","4":"882235","5":"0.2833712"},{"1":"TN","2":"180","3":"tennessee","4":"6770010","5":"0.2658785"},{"1":"TX","2":"1042","3":"texas","4":"28701845","5":"0.3630429"},{"1":"UT","2":"101","3":"utah","4":"3161105","5":"0.3195085"},{"1":"VA","2":"432","3":"virginia","4":"8517685","5":"0.5071801"},{"1":"VT","2":"8","3":"vermont","4":"626299","5":"0.1277345"},{"1":"WA","2":"757","3":"washington","4":"7535591","5":"1.0045662"},{"1":"WI","2":"145","3":"wisconsin","4":"5813568","5":"0.2494165"},{"1":"WV","2":"25","3":"west virginia","4":"1805832","5":"0.1384403"},{"1":"WY","2":"23","3":"wyoming","4":"577737","5":"0.3981050"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+starbucks_us_by_state
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["State/Province"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["state_name"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"AK","2":"49","3":"alaska","_rn_":"1"},{"1":"AL","2":"85","3":"alabama","_rn_":"2"},{"1":"AR","2":"55","3":"arkansas","_rn_":"3"},{"1":"AZ","2":"488","3":"arizona","_rn_":"4"},{"1":"CA","2":"2821","3":"california","_rn_":"5"},{"1":"CO","2":"481","3":"colorado","_rn_":"6"},{"1":"CT","2":"123","3":"connecticut","_rn_":"7"},{"1":"DC","2":"91","3":"district of columbia","_rn_":"8"},{"1":"DE","2":"25","3":"delaware","_rn_":"9"},{"1":"FL","2":"694","3":"florida","_rn_":"10"},{"1":"GA","2":"326","3":"georgia","_rn_":"11"},{"1":"HI","2":"99","3":"hawaii","_rn_":"12"},{"1":"IA","2":"89","3":"iowa","_rn_":"13"},{"1":"ID","2":"67","3":"idaho","_rn_":"14"},{"1":"IL","2":"575","3":"illinois","_rn_":"15"},{"1":"IN","2":"221","3":"indiana","_rn_":"16"},{"1":"KS","2":"94","3":"kansas","_rn_":"17"},{"1":"KY","2":"116","3":"kentucky","_rn_":"18"},{"1":"LA","2":"84","3":"louisiana","_rn_":"19"},{"1":"MA","2":"273","3":"massachusetts","_rn_":"20"},{"1":"MD","2":"257","3":"maryland","_rn_":"21"},{"1":"ME","2":"30","3":"maine","_rn_":"22"},{"1":"MI","2":"283","3":"michigan","_rn_":"23"},{"1":"MN","2":"184","3":"minnesota","_rn_":"24"},{"1":"MO","2":"188","3":"missouri","_rn_":"25"},{"1":"MS","2":"32","3":"mississippi","_rn_":"26"},{"1":"MT","2":"36","3":"montana","_rn_":"27"},{"1":"NC","2":"338","3":"north carolina","_rn_":"28"},{"1":"ND","2":"13","3":"north dakota","_rn_":"29"},{"1":"NE","2":"58","3":"nebraska","_rn_":"30"},{"1":"NH","2":"29","3":"new hampshire","_rn_":"31"},{"1":"NJ","2":"261","3":"new jersey","_rn_":"32"},{"1":"NM","2":"76","3":"new mexico","_rn_":"33"},{"1":"NV","2":"253","3":"nevada","_rn_":"34"},{"1":"NY","2":"645","3":"new york","_rn_":"35"},{"1":"OH","2":"378","3":"ohio","_rn_":"36"},{"1":"OK","2":"79","3":"oklahoma","_rn_":"37"},{"1":"OR","2":"359","3":"oregon","_rn_":"38"},{"1":"PA","2":"357","3":"pennsylvania","_rn_":"39"},{"1":"RI","2":"27","3":"rhode island","_rn_":"40"},{"1":"SC","2":"131","3":"south carolina","_rn_":"41"},{"1":"SD","2":"25","3":"south dakota","_rn_":"42"},{"1":"TN","2":"180","3":"tennessee","_rn_":"43"},{"1":"TX","2":"1042","3":"texas","_rn_":"44"},{"1":"UT","2":"101","3":"utah","_rn_":"45"},{"1":"VA","2":"432","3":"virginia","_rn_":"46"},{"1":"VT","2":"8","3":"vermont","_rn_":"47"},{"1":"WA","2":"757","3":"washington","_rn_":"48"},{"1":"WI","2":"145","3":"wisconsin","_rn_":"49"},{"1":"WV","2":"25","3":"west virginia","_rn_":"50"},{"1":"WY","2":"23","3":"wyoming","_rn_":"51"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+us_starbuck_geo<- Starbucks %>% filter( `Country`== "US") %>% filter(`State/Province`!= "AK") %>% filter(`State/Province`!= "HI")
+
+#us_starbuck_geo
+```
+
+
+```r
+states_map <- map_data("state")
+
+starbucks_with_2018_pop_est %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = starbucks_per_10000)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  scale_fill_viridis_c()+
+  geom_point(data = us_starbuck_geo, aes(x=Longitude, y= Latitude), alpha = 0.1)+
+  labs(title = "US states colored by starbucks per 10000 people") +
+theme(legend.background = element_blank())
+```
+
+![](04_exercises_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ### A few of your favorite things (`leaflet`)
 
