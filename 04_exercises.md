@@ -1,6 +1,6 @@
 ---
 title: 'Weekly Exercises #4'
-author: "Put your name here"
+author: "Rayan Hamid"
 output: 
   html_document:
     keep_md: TRUE
@@ -223,6 +223,68 @@ These exercises will reiterate what you learned in the "Mapping data with R" tut
 ### Starbucks locations (`ggmap`)
 
   1. Add the `Starbucks` locations to a world map. Add an aesthetic to the world map that sets the color of the points according to the ownership type. What, if anything, can you deduce from this visualization?  
+
+```r
+worldmap <- get_stamenmap(
+  bbox = c(left = -169, bottom = -61, right = 190, top = 81 ),
+  maptype = "terrain",
+  zoom = 2)
+```
+
+```
+## Source : http://tile.stamen.com/terrain/2/0/0.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/2/1/0.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/2/2/0.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/2/3/0.png
+```
+
+```
+## Source : http://tile.stamen.com/terrain/2/4/0.png
+```
+
+```
+## Not Found (HTTP 404). Failed to aquire tile /terrain/2/4/0.png.
+## Source : http://tile.stamen.com/terrain/2/0/1.png
+## Source : http://tile.stamen.com/terrain/2/1/1.png
+## Source : http://tile.stamen.com/terrain/2/2/1.png
+## Source : http://tile.stamen.com/terrain/2/3/1.png
+## Source : http://tile.stamen.com/terrain/2/4/1.png
+## Not Found (HTTP 404). Failed to aquire tile /terrain/2/4/1.png.
+## Source : http://tile.stamen.com/terrain/2/0/2.png
+## Source : http://tile.stamen.com/terrain/2/1/2.png
+## Source : http://tile.stamen.com/terrain/2/2/2.png
+## Source : http://tile.stamen.com/terrain/2/3/2.png
+## Source : http://tile.stamen.com/terrain/2/4/2.png
+## Not Found (HTTP 404). Failed to aquire tile /terrain/2/4/2.png.
+```
+
+```r
+ggmap(worldmap) + 
+  geom_point(data = Starbucks , aes(x = Longitude, y = Latitude, color = `Ownership Type`),
+             alpha = 0.5,
+             size = .1)+
+  theme_map() +
+  theme(legend.background = element_blank())
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+![](04_exercises_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+```r
+#From this it can be observed that there is a very large concentration of licensed and company owned in North America, which is expected, and almost all joint venture are located in Asia, with a higher concentration in South East Asia, and to a smaller extent in Eurasia.
+```
 
   2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area).  
 
